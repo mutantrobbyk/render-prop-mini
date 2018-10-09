@@ -69,7 +69,10 @@ So, here we have a LoginForm component that keeps track of the users email and p
 
 - Inside the components folder, create the following file:
   - Form.js
-- Create a class Component `Form` that has `handleChange`, `handleSubmit`, and `render` methods.  Remember, we want this component to be able to work for any type of form (i.e. Login or Registration), so the `handleChange` method should use the `name` attribute on the event target for the key on the object we pass into setState.  Let's have `handleSubmit` just log `this.state` to the console.  In the `render` method, create an object called `form` that has the `handleChange` and `handleSubmit` methods, and then return the render method on `props` invoked, and pass in the form object.
+- Create a class Component `Form` that has `handleChange`, `handleSubmit`, and `render` methods:  
+  - We want this component to be able to work for any type of form (i.e. Login or Registration), so the `handleChange` method should use the `name` attribute on the event target for the key on the object we pass into setState.  
+  - Let's have `handleSubmit` just log `this.state` to the console.  
+  - In the `render` method, create an object called `form` that has the `handleChange` and `handleSubmit` methods, and then return the render method on `props` invoked, and pass in the form object.
  
 ### Solution
 
@@ -158,7 +161,7 @@ export default function(props) {
 ```jsx
 import React from 'react'
 
-import Form from '../RPs/Form'
+import Form from './Form'
 
 export default function(props) {
   return (
