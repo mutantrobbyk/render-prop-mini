@@ -2,7 +2,7 @@
 
 # Project Summary
 
-In this project, we will practice using Render Props.  "A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic" - react docs
+In this project, we will practice using Render Props. "A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic" - [React Docs](https://reactjs.org/docs/render-props.html)
 
 ## Setup
 
@@ -13,14 +13,14 @@ In this project, we will practice using Render Props.  "A component with a rende
   - Delete `registerServiceWorker();`
 - Run `npm start`.
 - In a seperate terminal, `cd` into the project directory.
-- Create the following folders inside of src
+- Create the following folders inside of `./src`
   - components
 
 ## RP 1
 
 ### Summary
 
-The goal for this project is to use the `Render Prop` pattern to create a `Form` component, that will handle form state, but for any type of form. Let's take a look real quick at what a typical LoginForm component looks like.
+The goal for this project is to use the `Render Prop` pattern to create a `Form` component, that will handle form state, but for any type of form across our application. Let's take a look at what a typical `LoginForm` component looks like.
 ```jsx
 class LoginForm extends Component {
   constructor() {
@@ -62,17 +62,17 @@ class LoginForm extends Component {
     )
   }
 }
-``` 
-So, here we have a LoginForm component that keeps track of the users email and password on the components state.  When a user types into the `email` input field, we have a `handleEmailChange` callback function that will update state with the new value for their email.  The same goes for the password input field. The idea with using the render props pattern to create a `Form` component, is that this component will work for any type of form, without knowing what input fields it will have.  So we will want to create a more generic way of keeping track of, and updating state.  We will do this by adding a `name` attribute to the input fields, that we can access from `e.target.name`.  This way we can have one method `handleChange` that will work with any input field.
+```
+Here we have a `LoginForm` component that keeps track of the users email and password on the components state.  When a user types into the `email` input field, we have a `handleEmailChange` function that will update state with the new value for their email.  The same goes for the password input field. The idea with using the render props pattern to create a `Form` component is that this component will work for any type of form, without knowing what input fields it will have. We will create a more generic way of keeping track of and updating state. We will do this by adding a `name` attribute to the input fields that we can access from `e.target.name`.  This way we can have one method `handleChange` that will work with any input field.
 
 ### Step 1
 
 - Inside the components folder, create the following file:
   - Form.js
-- Create a class Component `Form` that has `handleChange`, `handleSubmit`, and `render` methods:  
-  - We want this component to be able to work for any type of form (i.e. Login or Registration), so the `handleChange` method should use the `name` attribute on the event target for the key on the object we pass into setState.  
-  - Let's have `handleSubmit` just log `this.state` to the console.  
-  - In the `render` method, create an object called `form` that has the `handleChange` and `handleSubmit` methods, and then return the render method on `props` invoked, and pass in the form object.
+- Create a class Component `Form` that has `handleChange`, `handleSubmit`, and `render` methods:
+  - We want this component to be able to work for any type of form (i.e. Login or Registration), so the `handleChange` method should use the `name` attribute on the event target for the computed key on the object we pass into setState.
+  - Let's have `handleSubmit` just log `this.state` to the console.
+  - In the `render` method, create an object called `form` that has the `handleChange` and `handleSubmit` methods, and then return the invoked `render` method that we receive on props and pass in the form object we created above.
  
 ### Solution
 
@@ -109,13 +109,13 @@ export default class Form extends Component {
 
 ### Step 2
 
-- Inside the components folder, create the following files:
+- Inside the `./src/components` folder, create the following files:
   - LoginForm.js
   - RegistrationForm.js
 - In `LoginForm.js` import `React` and our `Form` component.
-- Create a function component `LoginForm`.
-- `LoginForm` will render the `Form` component, and we will pass a `render` prop to the `Form` component.  The render prop will be equal to a function that returns the jsx code for our login form.  This is the function that is invoked in the render method of our `Form` component.
-- Now, in the `RegistrationForm.js` file we will do the same thing as the `LoginForm.js` file, excpet the render prop function with return the jsx code for a registration form instead.
+- Create a functional component called `LoginForm`.
+- `LoginForm` will render the `Form` component, and we will attach a prop called `render` to the `Form` component.  The render prop will be equal to a function that returns the jsx code for our login form. It receives a single parameter called `form` who's value is the data we passed in from the `Form` component's `props.render` invocation.
+- Now, in the `RegistrationForm.js` file we will do the same thing as the `LoginForm.js` file, excpet the render prop function will return the jsx code for a registration form instead, but use the same functionality from the `Form` `props.render` invocation.
 
 ### Solution
 
@@ -128,20 +128,20 @@ import React from 'react'
 
 import Form from './Form'
 
-export default function(props) {
+export default function LoginForm(props) {
   return (
     <Form render={form => {
       return (
         <div>
           <h1>Login Form</h1>
-          <input 
-            type="text" 
-            name="email" 
+          <input
+            type="text"
+            name="email"
             placeholder="email"
             onChange={form.handleChange}/>
-          <input 
-            type="text" 
-            name="password" 
+          <input
+            type="text"
+            name="password"
             placeholder="password"
             onChange={form.handleChange}/>
           <button onClick={form.handleSubmit}>submit</button>
@@ -163,30 +163,30 @@ import React from 'react'
 
 import Form from './Form'
 
-export default function(props) {
+export default function RegistrationForm(props) {
   return (
     <Form render={form => {
       return (
         <div>
           <h1>Registration Form</h1>
-          <input 
-            type="text" 
-            name="name" 
+          <input
+            type="text"
+            name="name"
             placeholder="name"
             onChange={form.handleChange}/>
-          <input 
-            type="text" 
-            name="email" 
+          <input
+            type="text"
+            name="email"
             placeholder="email"
             onChange={form.handleChange}/>
-          <input 
-            type="text" 
-            name="password" 
+          <input
+            type="text"
+            name="password"
             placeholder="password"
             onChange={form.handleChange}/>
-          <input 
-            type="text" 
-            name="confirmPassword" 
+          <input
+            type="text"
+            name="confirmPassword"
             placeholder="confirm Password"
             onChange={form.handleChange}/>
           <button onClick={form.handleSubmit}>submit</button>
@@ -201,7 +201,7 @@ export default function(props) {
 
 ### Step 3
 
-- In App.js, bring in our newly created `LoginForm` and `RegistrationForm` components and add them to the jsx code in the render method.
+- In `./src/App.js`, bring in our newly created `LoginForm` and `RegistrationForm` components and add them to the jsx code in the render method.
 
 ### Solution
 
